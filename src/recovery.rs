@@ -1,6 +1,6 @@
 use crate::command_executor::run_command;
 
-
+///Recupera la base de datos a su estado original
 #[allow(dead_code)]
 pub fn perfom_recovery(ruta:&str, timestamp:&str) {
 

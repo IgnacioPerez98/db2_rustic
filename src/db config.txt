@@ -2,4 +2,16 @@
 
 db2 update db cfg for bbdd2 using TRACKMOD YES
 
---ACA METI UN COMANDO PARA HABILITAR EL MODO ONLINE PERO NO SE CUAL FUE QUE ANDUVO : - )
+
+
+--insert data
+INSERT
+  INTO  "PERSONAS"."ALUMNOS" ("ID","FIRSTNAME","LASTNAME","EMAIL","GENDER","IPADRESS")
+  VALUES(
+999999,                  	--ID  INTEGER Not null
+'NACHO',               	--FIRSTNAME  VARCHAR(32)  
+'PEREZ',               	--LASTNAME  VARCHAR(32)  
+'Nacho@1.com',               	--EMAIL  VARCHAR(32)  
+'H',               	--GENDER  VARCHAR(32)  
+'192.168.1.100'                	--IPADRESS  VARCHAR(32)  
+);

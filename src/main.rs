@@ -1,7 +1,8 @@
 use backup::{compressed_backup, delta_backup, full_backup, incremental_backup, online_backup, tablespaces_backup};
-use clap::{command, Command};
+use clap::{arg, command, Command};
 use loaddata::loaddata::load_command;
-
+use recovery::perfom_recovery;
+use regex::Regex;
 
 
 //importacion de modulos
@@ -10,7 +11,10 @@ mod command_executor;
 mod backup;
 mod recovery; 
 
-
+fn extract_timestamp(filename: &str) -> Option<String> {
+    let re = Regex::new(r"\d{14}").unwrap();
+    re.find(filename).map(|mat| mat.as_str().to_string())
+}
 fn main() {
     let backup_route = String::from("/media/db2ucu/Backups");
 
@@ -56,6 +60,7 @@ fn main() {
         Command::new("recovery")
         .short_flag('r')
         .about("Carga un respaldo a la base de datos.")
+        .arg(arg!(--usefile <FILE> "El archivo de respaldo"))
         
     )
     .get_matches();
@@ -70,7 +75,19 @@ fn main() {
             Some(("tablespaces",_)) => tablespaces_backup(&backup_route),
             Some(("compressed",_)) => compressed_backup(&backup_route),
             _ => println!("Comando no admitido")
-        }
+        },
+        Some(("recovery",rec_arg)) => {
+            if let Some(file) = rec_arg.get_one::<String>("usefile") {
+                if let Some(tmsp) = extract_timestamp(file)  {
+                    perfom_recovery(&file, &tmsp);
+                }else {
+                    println!("No se puedo extraer el timestamp del archivo")
+                }
+                //perfom_recovery(&file, timestamp)
+            } else {
+                println!("Debe especificar un archivo de respaldo con --usefile");
+            }
+        },
         _ => println!("Comando no admitido")
 
         
