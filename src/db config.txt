@@ -15,3 +15,13 @@ INSERT
 'H',               	--GENDER  VARCHAR(32)  
 '192.168.1.100'                	--IPADRESS  VARCHAR(32)  
 );
+
+
+--drop cedulas
+drop table CITIZENS.CEDULAS;
+
+drop schema CITIZENS RESTRICT;
+
+
+
+UPDATE DATABASE CONFIGURATION USING LOGARCHMETH1 /media/db2ucu/Backups/Logs
