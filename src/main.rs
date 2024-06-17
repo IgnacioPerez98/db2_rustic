@@ -1,3 +1,4 @@
+use std::{path::PathBuf, str::FromStr};
 use backup::{compressed_backup, delta_backup, full_backup, incremental_backup, online_backup, tablespaces_backup};
 use clap::{arg, command, Command};
 use loaddata::loaddata::load_command;
@@ -11,12 +12,26 @@ mod command_executor;
 mod backup;
 mod recovery; 
 
+
+#[allow(dead_code)]
 fn extract_timestamp(filename: &str) -> Option<String> {
     let re = Regex::new(r"\d{14}").unwrap();
     re.find(filename).map(|mat| mat.as_str().to_string())
 }
+
+#[allow(dead_code)]
+fn get_current_path(pth :&str) -> Option<String> {
+    let current = PathBuf::from_str(pth).unwrap();
+    
+    if  let Some(ruta) = current.parent() {
+        Some(ruta.to_string_lossy().to_string())
+    }else {
+        None
+    }
+}
 fn main() {
-    let backup_route = String::from("/media/db2ucu/Backups");
+
+    let backup_route = String::from("/mnt/7cb78399-e05c-4e96-bee8-19f93b3f1760/Backups/");
 
     let matches = command!()
     .subcommand(
@@ -77,13 +92,10 @@ fn main() {
             _ => println!("Comando no admitido")
         },
         Some(("recovery",rec_arg)) => {
-            if let Some(file) = rec_arg.get_one::<String>("usefile") {
-                if let Some(tmsp) = extract_timestamp(file)  {
-                    perfom_recovery(&file, &tmsp);
-                }else {
-                    println!("No se puedo extraer el timestamp del archivo")
-                }
-                //perfom_recovery(&file, timestamp)
+            if let Some(file) = rec_arg.get_one::<String>("usefile"){
+                let tiempo = extract_timestamp(&file).unwrap();
+                let folder = get_current_path(&file).unwrap();
+                perfom_recovery(&tiempo, &folder);
             } else {
                 println!("Debe especificar un archivo de respaldo con --usefile");
             }

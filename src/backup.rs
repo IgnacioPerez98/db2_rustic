@@ -10,7 +10,7 @@ pub fn full_backup(reference :&str){
     db2 quiesce database immediate force connections
     db2 connect reset
     
-    db2 backup database bbdd2 to {route}
+    db2 backup database bbdd2 to '{route}'
     
     db2 connect to bbdd2
     db2 unquiesce database
