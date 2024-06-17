@@ -5,9 +5,10 @@ pub mod loaddata {
     /// DB2 LOAD:
     /// 
     ///     Ejecuta el comando :
+    ///     ```
     ///     db2 "LOAD FROM '/home/db2ucu/Desktop/MOCK_DATA.csv OF DEL MODIFIED BY COLDEL;
     ///     INSERT INTO MOCK.PERSONAS (ID,FIRSTNAME,LASTNAME,EMAIL,GENDER,IPADRESS) NONRECOVERABLE"
-    /// 
+    ///     ```
     /// El mismo es mas rápido que el import y es usado para realizar cargas masivas a una base de datos.
     pub fn load_command() {
         let script = r#"

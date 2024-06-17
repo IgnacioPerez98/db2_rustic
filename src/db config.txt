@@ -3,6 +3,8 @@
 db2 update db cfg for bbdd2 using TRACKMOD YES
 
 
+--https://www.ibm.com/docs/en/db2/11.5?topic=logging-circular
+
 
 --insert data
 INSERT

@@ -11,6 +11,7 @@ mod loaddata;
 mod command_executor;
 mod backup;
 mod recovery; 
+mod change_log_method;
 
 
 #[allow(dead_code)]

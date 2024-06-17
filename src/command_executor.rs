@@ -36,6 +36,10 @@ fn execute_script<P: AsRef<Path>>(path: P) -> io::Result<()> {
     }
 }
 
+
+/// Metodo publico que permite ejecutar un cmonado en el shell, 
+/// redirigiendo el std output e input de la consola, para darle
+/// mayor libertad al usuario.
 pub fn run_command(script: &str, script_path: &str) {
     println!("Ejecutar comando: \n{} \n", script);
     write_script(script_path, script).unwrap();
