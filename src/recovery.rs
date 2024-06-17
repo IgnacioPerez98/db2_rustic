@@ -14,3 +14,16 @@ pub fn perfom_recovery(timestamp:&str,folder:&str) {
     let script_path = "/tmp/db2_perform_recovery_script.sh";
     run_command(&script, script_path);    
 }
+
+#[allow(dead_code)]
+pub fn recovery_roll_fordward(){
+    let script = format!(
+        r#"
+        #!/bin/sh
+        
+        "#
+    );
+    let script_path = "/tmp/db22_recovery_roll_fordward.sh";
+    run_command(&script, &script_path);
+
+}

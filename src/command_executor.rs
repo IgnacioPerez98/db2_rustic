@@ -8,7 +8,6 @@ fn write_script<P: AsRef<Path>>(path: P, content: &str) -> io::Result<()> {
 
 ///Asigna permisos a el script creado
 fn make_executable(script_path: &str){
-     // Make the script executable
      Command::new("chmod")
      .arg("+x")
      .arg(script_path)
