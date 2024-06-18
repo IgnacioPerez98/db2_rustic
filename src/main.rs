@@ -2,7 +2,7 @@ use std::{path::PathBuf, str::FromStr};
 use backup::{compressed_backup, delta_backup, full_backup, incremental_backup, online_backup, tablespaces_backup};
 use clap::{arg, command, Command};
 use loaddata::loaddata::load_command;
-use recovery::perfom_recovery;
+use recovery::{perfom_recovery, recovery_roll_fordward};
 use regex::Regex;
 
 
@@ -77,7 +77,7 @@ fn main() {
         .short_flag('r')
         .about("Carga un respaldo a la base de datos.")
         .arg(arg!(--usefile <FILE> "El archivo de respaldo"))
-        
+        .arg(arg!(--usefilerfw <FILE> "EL respaldo a restaurar."))
     )
     .get_matches();
 
@@ -97,6 +97,10 @@ fn main() {
                 let tiempo = extract_timestamp(&file).unwrap();
                 let folder = get_current_path(&file).unwrap();
                 perfom_recovery(&tiempo, &folder);
+            } else if let Some(fw_file) = rec_arg.get_one::<String>("usefilerfw"){
+                let tiempo = extract_timestamp(&fw_file).unwrap();
+                let folder = get_current_path(&fw_file).unwrap();
+                recovery_roll_fordward(&tiempo, &folder);
             } else {
                 println!("Debe especificar un archivo de respaldo con --usefile");
             }
